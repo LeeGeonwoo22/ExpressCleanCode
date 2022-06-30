@@ -1,0 +1,31 @@
+{
+  "name": "expresscleancode_practice",
+  "version": "1.0.0",
+  "description": "practice clean code",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeGeonwoo22/ExpressCleanCode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeeGeonwoo22/ExpressCleanCode/issues"
+  },
+  
+  "homepage": "https://github.com/LeeGeonwoo22/ExpressCleanCode#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.18",
+    "winston": "^3.8.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  }
+}
