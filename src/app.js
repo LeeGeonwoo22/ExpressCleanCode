@@ -1,11 +1,19 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express()
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
 const morgan = require('morgan')
-const Port = 3000
-
 const {logger}  = require('./config/winston')
-// EXAMPLE: only log error responses
+require('dotenv').config()
+
+const Port =  process.env.DB_PORT
+const User =  process.env.DB_USER
+const Password = process.env.DB_PASSWORD
+
+
+mongoose.connect(`mongodb+srv://${User}:${Password}@cluster0.cvbef.mongodb.net/?retryWrites=true&w=majority`).then(() => console.log('MongoDb Connected...')).catch(err=> console.log(err))
+
+
 
 morgan('combined', {
     skip: function (req, res) { return res.statusCode < 400 }
@@ -29,3 +37,7 @@ app.get('/error', (req, res) => {
 app.listen(Port, () => {
   console.log(`Example app listening on port ${Port}`)
 })
+
+
+
+
