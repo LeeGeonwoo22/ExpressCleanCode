@@ -44,18 +44,18 @@ app.post('/signup', (req,res)=>{
 
 // 로그인
 app.post('/login', (req,res)=>{
-  User.findOne({email : req.body.email} , (err, userInfo) =>{
-    if(!userInfo) {
+  User.findOne({email : req.body.email} , (err, user) =>{
+    if(!user) {
       return res.json({
         loginSucess : false,
         message : "이메일에 해당하는 유저가 없습니다."
       })
     }
     // 해당 유저가 있음
-    userInfo.comparePassword(req.body.password, (err, isMatch) =>{
+    user.comparePassword(req.body.password, (err, isMatch) =>{
       if(!isMatch) return res.json({ loginSucess : false, message : "비밀번호가 틀렸습니다."})
 
-      userInfo.generateToken((err, user) => {
+      user.generateToken((err, user) => {
         if(err) return res.status(400).send(err);
         // 토큰 저장 . 쿠키 ? 로컬 스토리지?
         res.cookie("fortuneCookie", user.token)
