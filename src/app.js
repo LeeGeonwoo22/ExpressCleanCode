@@ -2,6 +2,7 @@ const express = require('express');
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan')
 const {logger}  = require('./config/winston')
 require('dotenv').config()
@@ -26,12 +27,6 @@ app.get('/', (req, res) => {
 //   res.sendStatus(200);
 })
 
-
-// app.get('/error', (req, res) => {
-//     logger.error('Error message');
-//   res.sendstatus(400);
-// })
-
 // 회원가입
 app.post('/signup', (req,res)=>{
   const user = new User(req.body)
@@ -45,6 +40,32 @@ app.post('/signup', (req,res)=>{
         success : true
       })
   })
+})
+
+// 로그인
+app.post('/login', (req,res)=>{
+  User.findOne({email : req.body.email} , (err, userInfo) =>{
+    if(!userInfo) {
+      return res.json({
+        loginSucess : false,
+        message : "이메일에 해당하는 유저가 없습니다."
+      })
+    }
+    // 해당 유저가 있음
+    userInfo.comparePassword(req.body.password, (err, isMatch) =>{
+      if(!isMatch) return res.json({ loginSucess : false, message : "비밀번호가 틀렸습니다."})
+
+      userInfo.generateToken((err, user) => {
+        if(err) return res.status(400).send(err);
+        // 토큰 저장 . 쿠키 ? 로컬 스토리지?
+        res.cookie("fortuneCookie", user.token)
+        .status(200)
+        .json({ loginSucess : true, userId : user._id})
+      })
+
+    })
+  })
+
 })
 
 app.listen(PORT, () => {
