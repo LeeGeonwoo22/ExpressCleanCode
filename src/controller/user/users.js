@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {User} = require("../entities/models/User")
+const {User} = require("../../orm/models/User")
 
 // 회원가입
 router.post('/signup', (req,res)=>{
