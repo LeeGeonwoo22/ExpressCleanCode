@@ -10,8 +10,8 @@ router.get('/', (req, res) => {
 
 router.post('/users', userController.signup);
 router.get('/users', userController.userInfo);
-router.patch('/users', userController.userUpdate);
-router.delete('/users', userController.userRemove);
+router.patch('/users/:id', userController.userUpdate);
+router.delete('/users/:id', userController.userRemove);
 
 
 module.exports = router;
