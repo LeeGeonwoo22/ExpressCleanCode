@@ -5,7 +5,6 @@ const morgan = require('morgan')
 const cors = require('cors');
 
 
-
 // 미들웨어
 app.use(morgan('tiny'));
 app.use(cors({
@@ -19,7 +18,9 @@ app.use(cookieParser());
 const userSign =  require('./routes/routers')
 app.use('/api' , userSign)
 
+//
+
+// console.log("env :",process.env)
+
 
 module.exports = app;
-
-

@@ -4,16 +4,29 @@ const { User } = require('../../entities/models/User')
 module.exports ={
     signup : async (req,res)=> {
         const { name, password, email } = req.body
-        const user = new User({
-            name, password, email
-        })
-        // const { name , email, password } = req.body
+        
         console.log('res :', req.body)
         try{
-            const userInfo = await user.save( name, password, email)
-            res.status(200).json(userInfo)
+            // if(!user) {
+            //     return res.status(400).json({ success :  false , message : "invaild access"})
+            // }
+            // const userInfo = await user.save( name, password, email)
+            // res.status(200).json(userInfo)
+            if(!req.body){
+                res.status(400).json({ success : false , message : "Content can not be emtpy!"})
+            }
+            else {
+                const user = new User({
+                    name : name, password : password, email : email
+                })
+                user.save(user)
+                    .then(data => {
+                        console.log(data)
+                        res.redirect('/add-user')
+                    })
+                }
         }catch(err){
-            res.status(400).json({success : false, message : err})
+            return res.status(400).json({ success :  false , message : "invaild access"})
         }
     },
 

@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
         type : String,
         trim : true,
         required : true,
-        minlegth : 5
+        minlegth : 6
     },
     role : {
         type : Number,
